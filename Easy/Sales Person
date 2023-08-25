@@ -98,8 +98,4 @@ According to orders 3 and 4 in the Orders table, it is easy to tell that only sa
 import pandas as pd
 
 def sales_person(sales_person: pd.DataFrame, company: pd.DataFrame, orders: pd.DataFrame) -> pd.DataFrame:
-    result = pd.merge(sales_person, orders, on = 'sales_id', how = 'outer')
-    result = result.merge(company, on = 'com_id', how = 'left')
-    result = result[~result['name_x'].isin(result['name_x'][result['name_y'] == 'RED'].to_list())]
-    result = result.rename(columns={'name_x':'name'})
-    return result[['name']]
+    return sales_person[~sales_person['sales_id'].isin(orders[orders['com_id']==int(company[company['name']=='RED'].com_id)].sales_id)][['name']] if 'RED' in company['name'].values else sales_person[['name']]
